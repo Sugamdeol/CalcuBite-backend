@@ -58,6 +58,8 @@ The app will be available at `http://localhost:5000`
 
 ### Deploy to Render (Free Tier)
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+
 #### Option 1: Using render.yaml (Recommended)
 
 1. **Push code to GitHub:**
