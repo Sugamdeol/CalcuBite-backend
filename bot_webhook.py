@@ -103,7 +103,7 @@ Analyzing your food photo...
 *Note:* Full AI vision integration in progress. 
 For now, please describe what you see in the photo and I'll provide detailed nutrition info!
 
-Example: "Rice, dal, and 2 rotis""""
+Example: "Rice, dal, and 2 rotis\""""
     except Exception as e:
         logger.error(f"Analysis error: {e}")
         return "❌ Sorry, I couldn't analyze that image. Please try again."
@@ -180,12 +180,17 @@ def setup_application():
 
 @app.route('/')
 def home():
-    """Health check endpoint."""
+    """Home endpoint."""
     return jsonify({
         'status': 'CalcuBite Bot is running',
         'version': '1.0.0',
         'webhook': f'{WEBHOOK_URL}/webhook' if WEBHOOK_URL else 'Not configured'
     })
+
+@app.route('/health')
+def health():
+    """Health check endpoint."""
+    return jsonify({'status': 'healthy'})
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
