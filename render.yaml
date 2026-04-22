@@ -1,0 +1,33 @@
+# Render deployment configuration for CalcuBite
+# Deploy to Render.com free tier
+
+services:
+  - type: web
+    name: calcubite
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: SECRET_KEY
+        generateValue: true
+      - key: FLASK_ENV
+        value: production
+
+  - type: web
+    name: calcubite-bot
+    runtime: python
+    plan: free
+    buildCommand: pip install -r bot_requirements.txt
+    startCommand: gunicorn bot_webhook:app --bind 0.0.0.0:$PORT --workers 1 --timeout 120
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: CALCUBITE_BOT_TOKEN
+        sync: false  # Set manually in Render dashboard
+      - key: WEBHOOK_URL
+        sync: false  # Will be: https://calcubite-bot.onrender.com
+      - key: PORT
+        value: 10000
